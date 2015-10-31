@@ -1,0 +1,69 @@
+﻿<ion-view view-title="testPage">
+    <ion-content>
+
+
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">Title</span>
+                <input type="text" ng-model="title">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Time</span>
+                <input type="text" ng-model="time">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Description</span>
+                <input type="text" ng-model="description">
+            </label>
+            <label class="item item-input item-select">
+                <span class="input-label">
+                    People to Invite
+                </span>
+                <select ng-model="guests">
+                    <option>Hanson</option>
+                    <option selected>Drake</option>
+                    <option>Tian</option>
+                    <option>Chris</option>
+                    <option>Imran</option>
+                </select>
+            </label>
+            <button class="button button-email" ng-click="saveEventDetails(title, time, description, guests)">Submit</button>
+        </div>
+
+
+
+        <div class="list" ng-if="eventSubmitted">
+            <label class="item item-input">
+                <span class="input-label">Title</span>
+                <input type="text" value="{{users}}">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Time</span>
+                <input type="text" value="{{eventTime}}">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Description</span>
+                <input type="text" value="{{eventDescription}}">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Invited</span>
+                <input type="text" value="{{eventGuests}}">
+            </label>
+        </div>
+
+
+
+
+
+
+
+
+
+    </ion-content>
+</ion-view>
+
+
+
+
