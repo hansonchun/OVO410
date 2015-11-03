@@ -100,14 +100,6 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
             }
         })
 
-
-        .state('app.testPage', {
-         url: "/testPage",
-         views: {
-             'menuContent': {
-                 templateUrl: "templates/donotdelete.html",
-             }
-         }
      });
 
     $urlRouterProvider.otherwise('/app/home');
