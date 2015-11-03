@@ -1,6 +1,6 @@
 angular.module('kontribute.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseAuth, $state) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseAuth, $state, $http, $ionicPopup, eventFactory, eventService) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -9,12 +9,81 @@ angular.module('kontribute.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
+   var vm = this;
+   vm.result;
+   
+
   var firebaseRef = new Firebase('https://torrid-torch-6578.firebaseio.com');
   var loginObj = $firebaseAuth(firebaseRef);
 
   // Form data for the login modal
   $scope.loginData = {};
+  $scope.eventSubmitted = false; 
+  $scope.eventCreation = false; 
+  $scope.anotherOne = false; 
+  $scope.attendingEvent = true; 
+  
 
+
+
+
+ $scope.getUserDetails = 
+   function () {
+   $scope.eventSubmitted = true; 
+     return eventFactory.getAllUsers().then(function(data) { //2. so you can use .then()
+              console.log("we out here" + data.Title); 
+              $scope.name = data.data.event.Title;
+              $scope.date = data.data.event.Date;  
+              $scope.time = data.data.event.Time; 
+              $scope.address = data.data.event.Address; 
+              $scope.description = data.data.event.Description; 
+              $scope.users = data.data.event.Users; 
+              console.log(data.data.event.Title); 
+
+    
+             });
+        
+
+       };
+   
+$scope.showEvent = function(){
+  $scope.eventCreation = false; 
+  $scope.anotherOne = false; 
+  breakButton(); 
+}
+
+$scope.breakButton = function(){
+  $scope.anotherOne = false; 
+}
+
+
+  $scope.confirmEvent = 
+  function (){
+       
+      var alert = $ionicPopup.alert({
+        title: 'Event Created!', 
+        template: 'Thanks for Kontributing!'
+      });
+      alert.then(function(res){
+        $scope.eventCreation = true; 
+         $scope.anotherOne = true; 
+      }); 
+
+  } 
+$scope.createEvent = 
+  function(title, date, time, address, description, guests){
+    console.log("here in CTRL", title, date, time, address, description, guests); 
+   
+    eventService.createEvent(title, date, time, address, description, guests);
+    $scope.confirmEvent(); 
+    
+  }; 
+ 
+
+$scope.validation = 
+function(){
+  $scope.eventCreation = false; 
+}; 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
