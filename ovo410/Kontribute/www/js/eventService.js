@@ -1,41 +1,34 @@
-﻿angular.module('kontribute.services', [])
-    .service('eventService', function(eventFactory, $http) {
+angular.module('kontribute.services', [])
+    .service('eventService', function(eventFactory) {
 
-        var vm = this;
-        var url = "http://localhost:52073/api/event";
-        vm.test;
-        vm.convertJson = convertJson;
-        vm.getAllUsers = getAllUsers;
-        vm.fetchUsers = fetchUsers;
-        vm.getResult = getResult;
-        vm.promise;
+        var vm = this; 
+        vm.createEvent = createEvent;
         vm.data;
+        vm.events = {}; 
 
         
 
-        function getAllUsers() {
-            fetchUsers();
-         
-        }
+      
+        function createEvent(title, date, time, address, description, guests){
+            var newEvent = { 
+                Title:  title, 
+                Date: date, 
+                Time: time, 
+                Address: address, 
+                Description: description, 
+                Users: guests, 
+            }; 
 
-
-        function fetchUsers() {
-            vm.promise = $http.get(url);
-            vm.promise.success(function (data, status, headers, config) {
-                vm.test = JSON.stringify(data);
-            
-            });
-            
-        }
-
-        function convertJson(data) {
-            vm.test = JSON.stringify(data);
+            console.log(newEvent.Time + " new event"); 
+            eventFactory.createEvent(newEvent); 
+    
+             };
          
 
-        }
-        function getResult() {
-            return vm.promise; 
-        }
        
+   
+            
+
+         
        
     });
